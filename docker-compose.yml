@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app: 
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 3000:3000
+      - 9229:9229    
+    environment:
+      - SERVER_PORT=3000
+      - DATABASE_CONNECTIONSTRING=mongodb://mongo:27017/local_library
+    command: ./node_modules/.bin/nodemon ./bin/www
+    volumes:
+      - .:/code
+    depends_on:
+      - mongo  
+  mongo:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+      - mongodb_config:/data/configdb
+volumes:
+  mongodb:
+  mongodb_config:
