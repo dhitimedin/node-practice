@@ -24,6 +24,7 @@ services:
     volumes:
       - mongodb:/data/db
       - mongodb_config:/data/configdb
+      - ./.docker/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
 volumes:
   mongodb:
   mongodb_config:
